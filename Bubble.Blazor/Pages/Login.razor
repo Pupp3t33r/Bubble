@@ -1,0 +1,11 @@
+﻿@page "/Login"
+
+<h3>Login</h3>
+
+<EditForm Model="userLogin" OnSubmit="HandleLogin">
+    <label for="username">Name</label>
+    <InputText id="username" @bind-Value="userLogin.UserName" />
+    <label for="password">Password</label>
+    <InputText id="password" @bind-Value="userLogin.Password" type="password" />
+    <button type="submit" class="btn btn-primary">Submit!</button>
+</EditForm>
