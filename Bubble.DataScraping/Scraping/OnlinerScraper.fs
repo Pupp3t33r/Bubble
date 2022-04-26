@@ -1,20 +1,12 @@
 ﻿module OnlinerScraper
 
 open FSharp.Data
+open FSharp.Collections.ParallelSeq
+open Bubble.Datascrapper.Types
 
 type feed = XmlProvider<"https://www.onliner.by/feed">
 
-type Article = 
-    {
-        title : string
-        text : string
-        link: string
-        pubDate : System.DateTimeOffset
-    }
-
-let articles = feed.GetSample()
-
-let getOnlinerArticleText (link:string) =
+let _getOnlinerArticleText (link:string) = async {
     let doc = HtmlDocument.Load(link)
 
     let div = doc.CssSelect("div.news-text") |> List.head
@@ -25,12 +17,22 @@ let getOnlinerArticleText (link:string) =
                                 && not (x.HasName("script")))
                     |> Seq.map (fun x -> x.InnerText())
                     |> String.concat "\n"
-    text
+    return text
+}
 
-let getOnlinerArticles () = 
-    let articles = articles.Channel.Items 
-                    |> Seq.map (fun x -> { title = x.Title;
-                                           link = x.Link; 
-                                           text = getOnlinerArticleText x.Link; 
-                                           pubDate = x.PubDate })
-    articles
+let _getOnlinerArticles () = async {
+    let rssResults = feed.GetSample()
+
+    let articles = rssResults.Channel.Items
+                    |> PSeq.withDegreeOfParallelism 5
+                    |> PSeq.map (fun x -> { title = x.Title;
+                                            link = x.Link; 
+                                            text = _getOnlinerArticleText x.Link |> Async.RunSynchronously; 
+                                            pubDate = x.PubDate })
+                    |> PSeq.toList
+    return articles
+}
+
+let GetOnlinerArticlesAsync () = 
+    let mytask = Async.StartAsTask(_getOnlinerArticles())
+    mytask

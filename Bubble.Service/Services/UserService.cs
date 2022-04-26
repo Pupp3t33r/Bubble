@@ -87,7 +87,7 @@ public class UserService: IUserService
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddSeconds(30),
+            expires: DateTime.Now.AddHours(1),
             signingCredentials: creds);
 
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);

@@ -1,11 +1,64 @@
 ﻿@page "/Login"
+@using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
 
-<h3>Login</h3>
+<PageTitle>Login</PageTitle>
 
-<EditForm Model="userLogin" OnSubmit="HandleLogin">
-    <label for="username">Name</label>
-    <InputText id="username" @bind-Value="userLogin.UserName" />
-    <label for="password">Password</label>
-    <InputText id="password" @bind-Value="userLogin.Password" type="password" />
-    <button type="submit" class="btn btn-primary">Submit!</button>
-</EditForm>
+<AuthorizeView>
+    <Authorized>
+        <MudPaper Class="pa-4">
+            <h2>You're authorized as @context.User.Identity.Name. With a role of @UserRole</h2>
+            <MudButton OnClick=Logout Variant="Variant.Filled" Color="Color.Warning" Class="ml-auto">Logout</MudButton>
+        </MudPaper>
+    </Authorized>
+    <NotAuthorized>
+        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            <MudTabPanel Text="Login">
+                <MudPaper Class="pa-4">
+                    <MudForm @bind-IsValid="@loginsuccess" @bind-Errors="@errors">
+                        <MudTextField @bind-Value=userLogin.UserName T="string" Label="Username" Required="true" RequiredError="User name is required!" />
+                        <MudTextField @bind-Value=userLogin.Password T="string" Label="Password"
+                                      InputType="InputType.Password"
+                                      RequiredError="Password is required!" />
+                        <div class="d-flex align-center justify-space-between mt-6">
+                            <MudButton OnClick=HandleLogin Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!loginsuccess)" Class="ml-auto">Login</MudButton>
+                        </div>
+                    </MudForm>
+                </MudPaper>
+            </MudTabPanel>
+            <MudTabPanel Text="Register">
+                <MudGrid>
+                    <MudItem xs="12" sm="7">
+                        <MudPaper Class="pa-4">
+                            <MudForm @bind-IsValid="@success" @bind-Errors="@errors">
+                                <MudTextField @bind-Value=userRegister.Name T="string" Label="Username" Required="true" RequiredError="User name is required!" />
+                                <MudTextField @bind-Value=userRegister.Email T="string" Label="Email" Required="true" RequiredError="Email is required!"
+                                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+                                <MudTextField @bind-Value=userRegister.Password T="string" Label="Password" HelperText="Choose a strong password" @ref="pwField1"
+                                              InputType="InputType.Password"
+                                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+                                              RequiredError="Password is required!" />
+                                <MudTextField T="string"
+                                              Label="Password" HelperText="Repeat the password" InputType="InputType.Password"
+                                              Validation="@(new Func<string, string>(PasswordMatch))" />
+                                <div class="d-flex align-center justify-space-between mt-6">
+                                    <MudButton OnClick=RegisterNewUser Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
+                                </div>
+                            </MudForm>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="5">
+                        <MudPaper Class="pa-4 mud-height-full">
+                            <MudText Typo="Typo.subtitle2">@($"Errors ({errors.Length})")</MudText>
+                            @foreach (var error in errors)
+                            {
+                                <MudText Color="@Color.Error">@error</MudText>
+                            }
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+        </MudTabs>
+    </NotAuthorized>
+</AuthorizeView>
+

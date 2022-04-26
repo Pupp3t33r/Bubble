@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Bubble.Service.Interfaces;
 using Bubble.Service.Query;
+using Bubble.Shared.Models.Request;
 using Bubble.Shared.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,26 +9,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bubble.API.Controllers;
 
 [ApiController]
-[Route("Articles")]
+[Route("api/[controller]")]
 public class ArticlesController: Controller
 {
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
-    public ArticlesController(IMediator mediator, IMapper mapper)
+    private readonly IArticleService _articleService;
+    public ArticlesController(IArticleService articleService)
     {
-        (_mediator, _mapper) = (mediator, mapper);
+        _articleService = articleService;
     }
 
-    [HttpGet("GetAll")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<List<GetArticlesResponse>>> GetAll()
+    [HttpPost("GetArticlesAsReader")]
+    public async Task<ActionResult<List<GetArticlesAsReaderResponse>>> GetArticlesAsReader(GetArticlesPageAsReaderRequest request)
     {
         try
         {
-            IEnumerable<OnlinerScraper.Article> articles = OnlinerScraper.getOnlinerArticles();
-            var response = await _mediator.Send(new GetAllArticlesQuery() {PageNum=1, PageSize=10 });
-            return _mapper.Map<List<GetArticlesResponse>>(response);
+            return await _articleService.GetArticlesPageAsReader(request);
         }
         catch (Exception ex)
         {
