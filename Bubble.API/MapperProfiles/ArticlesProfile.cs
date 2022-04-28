@@ -17,16 +17,17 @@ public class ArticlesProfile: Profile
             .ForMember(art=>art.Title, 
             opt=>opt.MapFrom(artRec=>artRec.title))
             .ForMember(art=>art.SourceURL,
-            opt=>opt.MapFrom(artRec=>artRec.link));
+            opt=>opt.MapFrom(artRec=>artRec.link))
+            .ForMember(art=>art.ShortDesc, 
+            opt=> opt.MapFrom(artRec=>artRec.shortText));
 
-        CreateMap<Article, GetArticlesAsReaderResponse>();
+        CreateMap<Article, GetArticlesPageAsReaderResponse>();
+        CreateMap<Article, GetArticlesPageAsEditorResponse>();
 
         CreateMap<Tag, GetTagsResponse>();
 
         CreateMap<Comment, GetCommentsResponse>()
             .ForMember(commentResp => commentResp.Username,
             opt => opt.MapFrom(src => src.User.Name));
-
-        CreateMap<Article, GetArticlesResponse>();
     }
 }

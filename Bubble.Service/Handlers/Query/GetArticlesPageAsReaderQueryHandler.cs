@@ -36,7 +36,7 @@ public class GetArticlesPageAsReaderQueryHandler : IRequestHandler<GetArticlesPa
                 query = query.Where(x => x.PublishDate.Date < request.ArticlesRequest.PubDate.Date);
                 break;
             case Shared.Enums.ComparisonOperators.Less_or_Equal:
-                query = query.Where(x => x.PublishDate.Date == request.ArticlesRequest.PubDate.Date);
+                query = query.Where(x => x.PublishDate.Date <= request.ArticlesRequest.PubDate.Date);
                 break;
             default:
                 break;
@@ -46,7 +46,7 @@ public class GetArticlesPageAsReaderQueryHandler : IRequestHandler<GetArticlesPa
 
         List<Article> resultList = await query.Skip((request.ArticlesRequest.PageNum - 1) * request.ArticlesRequest.PageSize)
                                               .Take(request.ArticlesRequest.PageSize)
-                                              .ToListAsync();
+                                              .ToListAsync(cancellationToken);
 
         return resultList;
     }

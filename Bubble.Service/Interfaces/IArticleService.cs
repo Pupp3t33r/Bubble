@@ -5,5 +5,9 @@ namespace Bubble.Service.Interfaces;
 public interface IArticleService
 {
     Task AddNewArticlesToDB();
-    Task<List<GetArticlesAsReaderResponse>> GetArticlesPageAsReader(GetArticlesPageAsReaderRequest request);
+    Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReader(GetArticlesPageAsReaderRequest request);
+    Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditor(GetArticlesPageAsEditorRequest request);
+    Task<int> GetArticlesPagesAmount(GetArticlesPagesAmountRequest request);
+    Task RateUnratedArticlesGoodness();
+    Task<List<string>> GetArticlesSources();
 }

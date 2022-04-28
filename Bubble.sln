@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.Shared", "Bubble.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.Blazor", "Bubble.Blazor\Bubble.Blazor.csproj", "{31E9E1C7-27F7-471A-9057-3A711B4E9A5F}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Bubble.DataScraping", "Bubble.DataScraping\Bubble.DataScraping.fsproj", "{B755A151-D4AE-425C-9628-97C0E2F7BD51}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Bubble.DataScraping", "Bubble.DataScraping\Bubble.DataScraping.fsproj", "{B755A151-D4AE-425C-9628-97C0E2F7BD51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

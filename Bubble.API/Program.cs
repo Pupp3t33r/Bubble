@@ -87,6 +87,10 @@ using (var scope = app.Services.CreateScope())
             "Fetch new articles",
                 () => articleService.AddNewArticlesToDB(),
                Cron.Hourly);
+    RecurringJob.AddOrUpdate(
+                            "Rate some Articles",
+                            () => articleService.RateUnratedArticlesGoodness(),
+                            "0 */1 * * *"); //"*/5 * * * *"
 }
 
 app.Run();

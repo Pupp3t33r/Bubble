@@ -1,0 +1,23 @@
+﻿@using Bubble.Shared.Enums
+
+
+<MudDrawer Open=true Elevation="0" Variant="@DrawerVariant.Persistent" Color="Color.Primary">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">Фильтры</MudText>
+    </MudDrawerHeader>
+    <MudNavMenu>
+        <MudSelect @bind-Value="Filter.Source" T="string" Label="Источники" AnchorOrigin="Origin.BottomCenter">
+            @foreach (var source in Sources)
+            {
+                 <MudSelectItem Value="@source" />
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="Filter.ArticleTitleSearch" Label="Поиск в названии статьи" Variant="Variant.Text"></MudTextField>
+        <MudSelect @bind-Value="Filter.PubDateComparisonOperator" T="ComparisonOperators" Label="Источники" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value=ComparisonOperators.Less_or_Equal>&le;</MudSelectItem>
+            <MudSelectItem Value=ComparisonOperators.Equal>=</MudSelectItem>
+            <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Editable with Placeholder" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
+    </MudNavMenu>
+</MudDrawer>

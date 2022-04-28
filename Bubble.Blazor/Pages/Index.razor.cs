@@ -9,7 +9,7 @@ public partial class Index
 {
     [Inject] public HttpClient Http { get; set; }
 
-    List<GetArticlesAsReaderResponse> articles = new();
+    List<GetArticlesPageAsReaderResponse> articles = new();
 
     GetArticlesPageAsReaderRequest filter = new() 
     { PageNum=1, PageSize=5, 
@@ -24,7 +24,7 @@ public partial class Index
         {
             var result = await Http.PostAsJsonAsync("api/Articles/GetArticlesAsReader", filter);
             if (result.IsSuccessStatusCode)
-                articles = await result.Content.ReadFromJsonAsync<List<GetArticlesAsReaderResponse>>(); 
+                articles = await result.Content.ReadFromJsonAsync<List<GetArticlesPageAsReaderResponse>>(); 
             StateHasChanged();
         }
     }

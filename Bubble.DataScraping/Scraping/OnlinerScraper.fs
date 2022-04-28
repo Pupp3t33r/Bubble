@@ -2,6 +2,7 @@
 
 open FSharp.Data
 open FSharp.Collections.ParallelSeq
+open System.Text.RegularExpressions
 open Bubble.Datascrapper.Types
 
 type feed = XmlProvider<"https://www.onliner.by/feed">
@@ -17,7 +18,19 @@ let _getOnlinerArticleText (link:string) = async {
                                 && not (x.HasName("script")))
                     |> Seq.map (fun x -> x.InnerText())
                     |> String.concat "\n"
-    return text
+    let edit1 = text.Replace("Auto.Onlíner в Telegram: обстановка на дорогах и только самые важные новости
+Есть о чем рассказать? Пишите в наш телеграм-бот. Это анонимно и быстро
+Перепечатка текста и фотографий Onlíner без разрешения редакции запрещена. ng@onliner.by", "")
+    let finalText = edit1.Replace("Наш канал в Telegram. Присоединяйтесь!
+Есть о чем рассказать? Пишите в наш телеграм-бот. Это анонимно и быстро
+Перепечатка текста и фотографий Onlíner без разрешения редакции запрещена. ng@onliner.by", "")
+    return finalText
+}
+
+let _getShortText (description:string) = async {
+    let textWithoutMarkup = Regex.Replace(input = description, pattern = "<.*?>", replacement = "")
+    let finalText = textWithoutMarkup.Replace(oldValue = "Читать далее…", newValue = "")
+    return finalText
 }
 
 let _getOnlinerArticles () = async {
@@ -27,7 +40,8 @@ let _getOnlinerArticles () = async {
                     |> PSeq.withDegreeOfParallelism 5
                     |> PSeq.map (fun x -> { title = x.Title;
                                             link = x.Link; 
-                                            text = _getOnlinerArticleText x.Link |> Async.RunSynchronously; 
+                                            shortText = _getShortText x.Description |> Async.RunSynchronously;
+                                            text = _getOnlinerArticleText x.Link |> Async.RunSynchronously;
                                             pubDate = x.PubDate })
                     |> PSeq.toList
     return articles
