@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.Service.Handlers.Query;
+namespace Bubble.CQRS.Handlers.Query;
 public class GetAllArticlesQueryHandler : IRequestHandler<GetAllArticlesQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;
@@ -14,7 +14,7 @@ public class GetAllArticlesQueryHandler : IRequestHandler<GetAllArticlesQuery, L
         List<Article> resultList = new();
         resultList = await _dbContext.Articles.AsNoTracking()
                             .Skip((request.PageNum - 1) * request.PageSize).Take(request.PageSize)
-                            .ToListAsync();
+                            .ToListAsync(cancellationToken);
         return resultList;
     }
 }

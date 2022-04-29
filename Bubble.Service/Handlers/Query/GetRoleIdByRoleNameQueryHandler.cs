@@ -1,8 +1,8 @@
 ﻿using Bubble.Data;
-using Bubble.Service.Query;
+using Bubble.CQRS.Query;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bubble.Service.Handlers.Query;
+namespace Bubble.CQRS.Handlers.Query;
 public class GetRoleIdByRoleNameQueryHandler : IRequestHandler<GetRoleIdByRoleNameQuery, Guid>
 {
     private readonly NewsDbContext _dbContext;
@@ -14,7 +14,7 @@ public class GetRoleIdByRoleNameQueryHandler : IRequestHandler<GetRoleIdByRoleNa
 
     public async Task<Guid> Handle(GetRoleIdByRoleNameQuery request, CancellationToken cancellationToken)
     {
-        var role = await _dbContext.AccessRoles.FirstOrDefaultAsync(role => role.Name == request.Name);
+        var role = await _dbContext.AccessRoles.FirstOrDefaultAsync(role => role.Name == request.Name, cancellationToken);
 
         return role != null ? role.Id : Guid.Empty;
     }

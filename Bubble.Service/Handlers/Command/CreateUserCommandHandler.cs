@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.Service.Handlers.Command;
+namespace Bubble.CQRS.Handlers.Command;
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
 {
     private readonly NewsDbContext _dbContext;
@@ -12,7 +12,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
     public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         await _dbContext.Users.AddAsync(request.User);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return request.User;
     }
 }

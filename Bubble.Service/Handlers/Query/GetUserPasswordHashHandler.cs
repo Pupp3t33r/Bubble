@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.Service.Handlers.Query;
+namespace Bubble.CQRS.Handlers.Query;
 public class GetUserPasswordHashHandler : IRequestHandler<GetUserPasswordHashQuery, string>
 {
     private readonly NewsDbContext _dbContext;
@@ -11,7 +11,7 @@ public class GetUserPasswordHashHandler : IRequestHandler<GetUserPasswordHashQue
 
     public async Task<string> Handle(GetUserPasswordHashQuery request, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == request.UserId);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == request.UserId, cancellationToken);
         return user!=null ? user.EncryptedPassword : String.Empty;
     }
 }

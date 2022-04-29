@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using Bubble.Service.Interfaces;
+﻿using System.Text;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

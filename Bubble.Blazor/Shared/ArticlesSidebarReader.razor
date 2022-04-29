@@ -7,6 +7,7 @@
     </MudDrawerHeader>
     <MudNavMenu>
         <MudSelect @bind-Value="Filter.Source" T="string" Label="Источники" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value="String.Empty" />
             @foreach (var source in Sources)
             {
                  <MudSelectItem Value="@source" />
@@ -18,6 +19,7 @@
             <MudSelectItem Value=ComparisonOperators.Equal>=</MudSelectItem>
             <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
         </MudSelect>
-        <MudDatePicker Label="Editable with Placeholder" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
+        <MudDatePicker Label="Дата" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
+        <MudButton OnClick=FilterOut Variant="Variant.Filled" FullWidth="true">Отфильтровать</MudButton>
     </MudNavMenu>
 </MudDrawer>

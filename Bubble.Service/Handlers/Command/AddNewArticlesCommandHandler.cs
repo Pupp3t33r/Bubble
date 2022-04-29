@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Handlers.Command;
+﻿namespace Bubble.CQRS.Handlers.Command;
 public class AddNewArticlesCommandHandler: IRequestHandler<AddNewArticlesCommand, int>
 {
     private readonly NewsDbContext _dbContext;
@@ -11,6 +11,6 @@ public class AddNewArticlesCommandHandler: IRequestHandler<AddNewArticlesCommand
     public async Task<int> Handle(AddNewArticlesCommand request, CancellationToken cancellationToken)
     {
         await _dbContext.Articles.AddRangeAsync(request.ArticlesToWrite);
-        return await _dbContext.SaveChangesAsync();
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Bubble.Data.Entities;
 
-namespace Bubble.Service.Query;
+namespace Bubble.CQRS.Query;
 
 public class GetAllArticlesQuery : IRequest<List<Article>>
 {

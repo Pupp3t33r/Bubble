@@ -1,8 +1,8 @@
 ﻿using Bubble.Data;
-using Bubble.Service.Query;
+using Bubble.CQRS.Query;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bubble.Service.Handlers.Query;
+namespace Bubble.CQRS.Handlers.Query;
 public class CheckIfUserExistsQueryHandler : IRequestHandler<CheckIfUserExistsQuery, Guid>
 {
     private readonly NewsDbContext _dbContext;
@@ -13,7 +13,8 @@ public class CheckIfUserExistsQueryHandler : IRequestHandler<CheckIfUserExistsQu
     }
     public async Task<Guid> Handle(CheckIfUserExistsQuery request, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(x=>x.Name.Equals(request.UserName));
+        var user = await _dbContext.Users
+                .FirstOrDefaultAsync(x=>x.Name.Equals(request.UserName), cancellationToken);
         return user != null ? user.Id : Guid.Empty;
     }
 }

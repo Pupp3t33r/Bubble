@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Handlers.Command;
+﻿namespace Bubble.CQRS.Handlers.Command;
 public class RateArticleGoodnessCommandHandler : IRequestHandler<RateArticleGoodnessCommand, int>
 {
     private readonly NewsDbContext _dbContext;

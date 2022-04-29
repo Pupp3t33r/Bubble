@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Handlers.Query;
+﻿namespace Bubble.CQRS.Handlers.Query;
 public class GetArticlesPageAsReaderQueryHandler : IRequestHandler<GetArticlesPageAsReaderQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;
@@ -19,7 +19,7 @@ public class GetArticlesPageAsReaderQueryHandler : IRequestHandler<GetArticlesPa
         if (!String.IsNullOrEmpty(request.ArticlesRequest.ArticleTitleSearch))
         {
             query = query.Where(x=>
-                        x.Source.ToLower().Contains(request.ArticlesRequest.ArticleTitleSearch.ToLower()));
+                        x.Title.ToLower().Contains(request.ArticlesRequest.ArticleTitleSearch.ToLower()));
         }
         switch (request.ArticlesRequest.PubDateComparisonOperator)
         {

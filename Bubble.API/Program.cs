@@ -1,12 +1,12 @@
 using Bubble.API.MapperProfiles;
 using Bubble.Data;
-using Bubble.Service.Interfaces;
-using Bubble.Service.Query;
-using Bubble.Service.Services;
+using Bubble.CQRS.Query;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using Hangfire.SqlServer;
+using Bubble.APIServices.Interfaces;
+using Bubble.APIServices.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

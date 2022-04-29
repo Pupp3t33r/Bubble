@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Command;
+﻿namespace Bubble.CQRS.Command;
 public class CreateUserCommand: IRequest<User>
 {
     public User User { get; set; }

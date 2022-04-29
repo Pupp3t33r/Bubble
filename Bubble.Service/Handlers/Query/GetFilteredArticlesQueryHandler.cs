@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.Service.Handlers.Query;
+namespace Bubble.CQRS.Handlers.Query;
 public class GetFilteredArticlesQueryHandler : IRequestHandler<GetFilteredArticlesQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;
@@ -34,7 +34,7 @@ public class GetFilteredArticlesQueryHandler : IRequestHandler<GetFilteredArticl
         }
 
         List<Article> resultList = await query.Skip((request.PageNum - 1) * request.PageSize).Take(request.PageSize)
-                                .ToListAsync();
+                                .ToListAsync(cancellationToken);
 
         return resultList;
     }

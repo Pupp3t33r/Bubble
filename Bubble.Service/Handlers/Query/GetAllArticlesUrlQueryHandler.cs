@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Handlers.Query;
+﻿namespace Bubble.CQRS.Handlers.Query;
 public class GetAllArticlesUrlQueryHandler : IRequestHandler<GetAllArticlesUrlQuery, List<string>>
 {
     private readonly NewsDbContext _dbContext;
@@ -10,6 +10,6 @@ public class GetAllArticlesUrlQueryHandler : IRequestHandler<GetAllArticlesUrlQu
 
     public async Task<List<string>> Handle(GetAllArticlesUrlQuery request, CancellationToken cancellationToken)
     {
-        return await _dbContext.Articles.Select(article => article.SourceURL).ToListAsync();
+        return await _dbContext.Articles.Select(article => article.SourceURL).ToListAsync(cancellationToken);
     }
 }

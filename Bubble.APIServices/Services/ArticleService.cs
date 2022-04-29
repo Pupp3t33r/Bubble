@@ -1,14 +1,18 @@
 ﻿using AutoMapper;
-using Bubble.Service.Interfaces;
-using Bubble.Service.JsonModels;
+using Bubble.APIServices.Interfaces;
+using Bubble.APIServices.JsonModels;
+using Bubble.Data.Entities;
+using Bubble.CQRS.Command;
+using Bubble.CQRS.Query;
 using Bubble.Shared.Models.Request;
 using Bubble.Shared.Models.Response;
+using MediatR;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace Bubble.Service.Services;
+namespace Bubble.APIServices.Services;
 public class ArticleService : IArticleService
 {
     private readonly IMediator _mediator;
@@ -107,6 +111,11 @@ public class ArticleService : IArticleService
         return await _mediator.Send(new GetArticlesPagesAmountReaderQuery { filters = request });
     }
 
+    public async Task<int> GetArticlesPagesAmountEditor(GetArticlesPageAsEditorRequest request)
+    {
+        return await _mediator.Send(new GetArticlesPagesAmountEditorQuery { filters = request });
+    }
+
     public async Task<List<string>> GetArticlesSources()
     {
         return await _mediator.Send(new GetArticlesSourcesQuery());
@@ -128,4 +137,5 @@ public class ArticleService : IArticleService
             return WordRatings = JsonSerializer.Deserialize<Dictionary<string, int?>>(jsonPath);
         }
     }
+
 }

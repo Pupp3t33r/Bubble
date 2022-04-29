@@ -1,4 +1,4 @@
-﻿using Bubble.Service.Interfaces;
+﻿using Bubble.APIServices.Interfaces;
 using Bubble.Shared.Models.Request;
 using Bubble.Shared.Models.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -55,8 +55,8 @@ public class ArticlesController: Controller
         }
     }
 
-    [HttpPost("GetArticlesPagesAmount")]
-    public async Task<ActionResult<int>> GetArticlesPagesAmount(GetArticlesPageAsReaderRequest request)
+    [HttpPost("GetArticlesPagesAmountReader")]
+    public async Task<ActionResult<int>> GetArticlesPagesAmount_Reader(GetArticlesPageAsReaderRequest request)
     {
         try
         {
@@ -67,6 +67,20 @@ public class ArticlesController: Controller
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpPost("GetArticlesPagesAmountEditor")]
+    public async Task<ActionResult<int>> GetArticlesPagesAmount_Editor(GetArticlesPageAsEditorRequest request)
+    {
+        try
+        {
+            return await _articleService.GetArticlesPagesAmountEditor(request);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpGet("GetSources")]
     public async Task<ActionResult<List<string>>> GetSources()
     {

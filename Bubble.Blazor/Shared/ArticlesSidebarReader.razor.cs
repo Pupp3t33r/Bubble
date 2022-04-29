@@ -9,6 +9,7 @@ public partial class ArticlesSidebarReader
     [Inject] public HttpClient Http { get; set; }
     [Parameter] public GetArticlesPageAsReaderRequest Filter { get; set; }
     [Parameter] public EventCallback<GetArticlesPageAsReaderRequest> FilterChanged { get; set; }
+    [Parameter] public EventCallback FilterOut { get; set; }
 
     private List<string> Sources = new();
     private DateTime? pubDate = DateTime.Now;

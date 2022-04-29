@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
-using Bubble.Service.Command;
-using Bubble.Service.Interfaces;
-using Bubble.Service.Query;
+using Bubble.APIServices.Interfaces;
+using Bubble.Data.Entities;
+using Bubble.CQRS.Command;
+using Bubble.CQRS.Query;
 using Bubble.Shared.Models.Request;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,7 +12,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Bubble.Service.Services;
+namespace Bubble.APIServices.Services;
 
 public class UserService: IUserService
 {

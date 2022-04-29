@@ -18,4 +18,11 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bubble.DataScraping\Bubble.DataScraping.fsproj" />
+    <ProjectReference Include="..\Bubble.Service\Bubble.CQRS.csproj" />
+    <ProjectReference Include="..\Bubble.Shared\Bubble.Shared.csproj" />
+    <ProjectReference Include="..\Bubble\Bubble.Data.csproj" />
+  </ItemGroup>
+
 </Project>

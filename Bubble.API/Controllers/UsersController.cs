@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Bubble.Data.Entities;
-using Bubble.Service.Command;
-using Bubble.Service.Interfaces;
+﻿using Bubble.Data.Entities;
 using Bubble.Shared.Models.Request;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Bubble.APIServices.Interfaces;
 
 namespace Bubble.API.Controllers;
 

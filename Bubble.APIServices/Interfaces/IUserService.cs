@@ -1,6 +1,6 @@
 ﻿using Bubble.Shared.Models.Request;
 
-namespace Bubble.Service.Interfaces;
+namespace Bubble.APIServices.Interfaces;
 public interface IUserService
 {
     Task<Guid> AddUserAsync(CreateUserRequest request);

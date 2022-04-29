@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Handlers.Query;
+﻿namespace Bubble.CQRS.Handlers.Query;
 public class GetArticlesPageAsEditorQueryHandler : IRequestHandler<GetArticlesPageAsEditorQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;
@@ -19,7 +19,7 @@ public class GetArticlesPageAsEditorQueryHandler : IRequestHandler<GetArticlesPa
         if (!String.IsNullOrEmpty(request.filters.ArticleTitleSearch))
         {
             query = query.Where(x =>
-                        x.Source.ToLower().Contains(request.filters.ArticleTitleSearch.ToLower()));
+                        x.Title.ToLower().Contains(request.filters.ArticleTitleSearch.ToLower()));
         }
         switch (request.filters.PubDateComparisonOperator)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Bubble.Service.JsonModels;
+namespace Bubble.APIServices.JsonModels;
 
 public class Lemma
 {

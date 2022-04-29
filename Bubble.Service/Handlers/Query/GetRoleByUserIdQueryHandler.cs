@@ -1,4 +1,4 @@
-﻿namespace Bubble.Service.Handlers.Query;
+﻿namespace Bubble.CQRS.Handlers.Query;
 public class GetRoleByUserIdQueryHandler : IRequestHandler<GetRoleByUserIdQuery, string>
 {
     private readonly NewsDbContext _dbContext;
@@ -12,7 +12,7 @@ public class GetRoleByUserIdQueryHandler : IRequestHandler<GetRoleByUserIdQuery,
     {
         var user = await _dbContext.Users
                     .Include(user=>user.Role)
-                    .AsNoTracking().FirstOrDefaultAsync(user=>user.Id==request.UserId);
+                    .AsNoTracking().FirstOrDefaultAsync(user=>user.Id==request.UserId, cancellationToken);
 
         return user!=null ? user.Role.Name:String.Empty;
     }

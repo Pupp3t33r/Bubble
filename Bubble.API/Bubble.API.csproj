@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bubble.APIServices\Bubble.APIServices.csproj" />
     <ProjectReference Include="..\Bubble.DataScraping\Bubble.DataScraping.fsproj" />
     <ProjectReference Include="..\Bubble.Service\Bubble.CQRS.csproj" />
     <ProjectReference Include="..\Bubble.Shared\Bubble.Shared.csproj" />
