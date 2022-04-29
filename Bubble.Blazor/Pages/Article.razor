@@ -1,9 +1,26 @@
 ﻿@page "/Articles/{ArticleId}"
 
 
+
 @if (article is not null)
 {
+    <PageTitle>@article.Title</PageTitle>
+
     <h1>@article.Title</h1>
 
     <p>@article.ArticleText</p>
 }
+
+<AuthorizeView>
+    <Authorized>
+        <MudTextField T="string" Label="Комментарий" Variant="Variant.Text" @bind-Text="@newCommentText" Lines="5" />
+        <MudButton OnClick=PostCommentAsync Variant="Variant.Filled"
+                   EndIcon="@Icons.Material.Filled.Send"
+                   Color="Color.Primary">
+            Оставить комментарий
+        </MudButton>
+    </Authorized>
+    <NotAuthorized>
+        <span>Залогиньтесь чтобы оставить комментарий</span>
+    </NotAuthorized>
+</AuthorizeView>

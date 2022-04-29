@@ -10,11 +10,6 @@ public class NewsDbContext : DbContext
     public DbSet<AccessRole> AccessRoles { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    optionsBuilder.UseSqlServer("Server=localhost,1433; Database=Bubble; User Id=sa; Password=qWe123iOp890;");
-    //}
-
     public NewsDbContext(DbContextOptions<NewsDbContext> options) : base(options)
     {
 

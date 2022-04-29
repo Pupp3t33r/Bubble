@@ -5,11 +5,11 @@ namespace Bubble.APIServices.Interfaces;
 public interface IArticleService
 {
     Task AddNewArticlesToDB();
-    Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReader(GetArticlesPageAsReaderRequest request);
-    Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditor(GetArticlesPageAsEditorRequest request);
-    Task<GetArticleResponse> GetArticle(Guid id);
-    Task<int> GetArticlesPagesAmountReader(GetArticlesPageAsReaderRequest request);
-    Task<int> GetArticlesPagesAmountEditor(GetArticlesPageAsEditorRequest request);
+    Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReaderAsync(GetArticlesPageAsReaderRequest request);
+    Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditorAsync(GetArticlesPageAsEditorRequest request);
+    Task<GetArticleResponse> GetArticleAsync(Guid id);
+    Task<int> GetArticlesPagesAmountReaderAsync(GetArticlesPageAsReaderRequest request);
+    Task<int> GetArticlesPagesAmountEditorAsync(GetArticlesPageAsEditorRequest request);
     Task RateUnratedArticlesGoodness();
-    Task<List<string>> GetArticlesSources();
+    Task<List<string>> GetArticlesSourcesAsync();
 }

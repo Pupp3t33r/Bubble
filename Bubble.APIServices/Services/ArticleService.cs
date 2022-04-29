@@ -89,34 +89,34 @@ public class ArticleService : IArticleService
         }
     }
 
-    public async Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReader(GetArticlesPageAsReaderRequest request)
+    public async Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReaderAsync(GetArticlesPageAsReaderRequest request)
     {
         var articles = await _mediator.Send(new GetArticlesPageAsReaderQuery { ArticlesRequest = request });
         return _mapper.Map<List<GetArticlesPageAsReaderResponse>>(articles);
     }
-    public async Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditor(GetArticlesPageAsEditorRequest request)
+    public async Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditorAsync(GetArticlesPageAsEditorRequest request)
     {
         var articles = await _mediator.Send(new GetArticlesPageAsEditorQuery { filters = request });
         return _mapper.Map<List<GetArticlesPageAsEditorResponse>>(articles);
     }
 
-    public async Task<GetArticleResponse> GetArticle(Guid id)
+    public async Task<GetArticleResponse> GetArticleAsync(Guid id)
     {
         var article = await _mediator.Send(new GetArticleQuery { ArticleId = id });
         return _mapper.Map<GetArticleResponse>(article);
     }
 
-    public async Task<int> GetArticlesPagesAmountReader(GetArticlesPageAsReaderRequest request)
+    public async Task<int> GetArticlesPagesAmountReaderAsync(GetArticlesPageAsReaderRequest request)
     {
         return await _mediator.Send(new GetArticlesPagesAmountReaderQuery { filters = request });
     }
 
-    public async Task<int> GetArticlesPagesAmountEditor(GetArticlesPageAsEditorRequest request)
+    public async Task<int> GetArticlesPagesAmountEditorAsync(GetArticlesPageAsEditorRequest request)
     {
         return await _mediator.Send(new GetArticlesPagesAmountEditorQuery { filters = request });
     }
 
-    public async Task<List<string>> GetArticlesSources()
+    public async Task<List<string>> GetArticlesSourcesAsync()
     {
         return await _mediator.Send(new GetArticlesSourcesQuery());
     }

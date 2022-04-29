@@ -7,6 +7,9 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Bubble.APIServices.Interfaces;
 using Bubble.APIServices.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,11 +50,25 @@ builder.Services.AddMediatR(typeof(GetAllArticlesQuery).Assembly);
 builder.Services.AddAutoMapper(typeof(UsersProfile).Assembly);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddDbContext<NewsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlSrvr"),
         x => x.MigrationsAssembly("Bubble.API"));
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 var app = builder.Build();
 
@@ -69,6 +86,8 @@ app.UseHttpsRedirection();
 app.UseCors(NewsArticlesFrontEnd);
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

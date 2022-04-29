@@ -21,7 +21,7 @@ public class ArticlesController: Controller
     {
         try
         {
-            return await _articleService.GetArticlesPageAsReader(request);
+            return await _articleService.GetArticlesPageAsReaderAsync(request);
         }
         catch (Exception ex)
         {
@@ -34,7 +34,7 @@ public class ArticlesController: Controller
     {
         try
         {
-            return await _articleService.GetArticlesPageAsEditor(request);
+            return await _articleService.GetArticlesPageAsEditorAsync(request);
         }
         catch (Exception ex)
         {
@@ -47,7 +47,7 @@ public class ArticlesController: Controller
     {
         try
         {
-            return await _articleService.GetArticle(id);
+            return await _articleService.GetArticleAsync(id);
         }
         catch (Exception ex)
         {
@@ -60,7 +60,7 @@ public class ArticlesController: Controller
     {
         try
         {
-            return await _articleService.GetArticlesPagesAmountReader(request);
+            return await _articleService.GetArticlesPagesAmountReaderAsync(request);
         }
         catch (Exception ex)
         {
@@ -73,7 +73,7 @@ public class ArticlesController: Controller
     {
         try
         {
-            return await _articleService.GetArticlesPagesAmountEditor(request);
+            return await _articleService.GetArticlesPagesAmountEditorAsync(request);
         }
         catch (Exception ex)
         {
@@ -86,7 +86,7 @@ public class ArticlesController: Controller
     {
         try
         {
-            return await _articleService.GetArticlesSources();
+            return await _articleService.GetArticlesSourcesAsync();
         }
         catch (Exception ex)
         {
