@@ -19,6 +19,7 @@ public partial class ArticlesSidebarReader
         {
             Sources = await Http.GetFromJsonAsync<List<string>>("api/Articles/GetSources");
             pubDate = Filter.PubDate;
+            StateHasChanged();
         }
     }
 }

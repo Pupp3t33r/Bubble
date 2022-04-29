@@ -1,0 +1,9 @@
+﻿@page "/Articles/{ArticleId}"
+
+
+@if (article is not null)
+{
+    <h1>@article.Title</h1>
+
+    <p>@article.ArticleText</p>
+}

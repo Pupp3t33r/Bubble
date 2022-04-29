@@ -28,6 +28,7 @@ public class ArticlesController: Controller
             return BadRequest(ex.Message);
         }
     }
+
     [HttpPost("GetArticlesAsEditor"), Authorize(Roles = "Editor, Administrator")]
     public async Task<ActionResult<List<GetArticlesPageAsEditorResponse>>> GetArticlesAsEditor(GetArticlesPageAsEditorRequest request)
     {
@@ -40,12 +41,26 @@ public class ArticlesController: Controller
             return BadRequest(ex.Message);
         }
     }
-    [HttpPost("GetArticlesPagesAmount")]
-    public async Task<ActionResult<int>> GetArticlesPagesAmount(GetArticlesPagesAmountRequest request)
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<GetArticleResponse>> GetArticle(Guid id)
     {
         try
         {
-            return await _articleService.GetArticlesPagesAmount(request);
+            return await _articleService.GetArticle(id);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("GetArticlesPagesAmount")]
+    public async Task<ActionResult<int>> GetArticlesPagesAmount(GetArticlesPageAsReaderRequest request)
+    {
+        try
+        {
+            return await _articleService.GetArticlesPagesAmountReader(request);
         }
         catch (Exception ex)
         {

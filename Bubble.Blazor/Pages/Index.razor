@@ -1,23 +1,14 @@
 ﻿@page "/"
 
-<PageTitle>News</PageTitle>
+<PageTitle>Новости</PageTitle>
 
 <MudDrawerContainer Class="mud-height-full">
     <ArticlesSidebarReader @bind-Filter=filter />
     <div class="px-4 justify-center align-center mud-height-full">
+        <MudPagination Variant="Variant.Outlined" Count="4" />
         @foreach (var article in articles)
         {
-            <MudCard>
-                <MudCardContent>
-                    <MudText>@article.Title</MudText>
-                    <MudText Typo="Typo.body2">@article.ShortDesc</MudText>
-                </MudCardContent>
-                <MudCardActions>
-                    <a href="articles/@article.Id">
-                        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                    </a>
-                </MudCardActions>
-            </MudCard>
+            <ArticleCard_Reader ArticleDetails=article />
         }
     </div>
 </MudDrawerContainer>

@@ -23,6 +23,7 @@ public class ArticlesProfile: Profile
 
         CreateMap<Article, GetArticlesPageAsReaderResponse>();
         CreateMap<Article, GetArticlesPageAsEditorResponse>();
+        CreateMap<Article, GetArticleResponse>();
 
         CreateMap<Tag, GetTagsResponse>();
 

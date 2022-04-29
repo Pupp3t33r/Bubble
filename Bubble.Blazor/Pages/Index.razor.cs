@@ -24,7 +24,10 @@ public partial class Index
         {
             var result = await Http.PostAsJsonAsync("api/Articles/GetArticlesAsReader", filter);
             if (result.IsSuccessStatusCode)
-                articles = await result.Content.ReadFromJsonAsync<List<GetArticlesPageAsReaderResponse>>(); 
+                articles = await result.Content.ReadFromJsonAsync<List<GetArticlesPageAsReaderResponse>>();
+            var result2 = await Http.PostAsJsonAsync("api/Articles/GetArticlesAsReader", filter);
+            if (result2.IsSuccessStatusCode)
+                articles = await result.Content.ReadFromJsonAsync<List<GetArticlesPageAsReaderResponse>>();
             StateHasChanged();
         }
     }

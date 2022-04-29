@@ -1,13 +1,13 @@
 ﻿namespace Bubble.Service.Handlers.Query;
-public class GetArticlesPagesAmountQueryHandler : IRequestHandler<GetArticlesPagesAmountQuery, int>
+public class GetArticlesPagesAmountReaderQueryHandler : IRequestHandler<GetArticlesPagesAmountReaderQuery, int>
 {
     private readonly NewsDbContext _dbContext;
 
-    public GetArticlesPagesAmountQueryHandler(NewsDbContext dbContext)
+    public GetArticlesPagesAmountReaderQueryHandler(NewsDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-    public async Task<int> Handle(GetArticlesPagesAmountQuery request, CancellationToken cancellationToken)
+    public async Task<int> Handle(GetArticlesPagesAmountReaderQuery request, CancellationToken cancellationToken)
     {
         var query = _dbContext.Articles.AsNoTracking();
 
@@ -39,18 +39,6 @@ public class GetArticlesPagesAmountQueryHandler : IRequestHandler<GetArticlesPag
                 break;
             default:
                 break;
-        }
-
-        if (request.filters.AsEditor)
-        {
-            query = query.Where(x=>x.GoodnessRating>=request.filters.GoodnessRatingMin&&
-                                            x.GoodnessRating<=request.filters.GoodnessRatingMax);
-        }
-        if (request.filters.Approved is not null)
-        {
-            query = request.filters.Approved == true ?
-                    query.Where(x => x.Approved) :
-                    query.Where(x => !x.Approved);
         }
         var itemCount = await query.CountAsync(cancellationToken);
         return (itemCount + request.filters.PageSize - 1) / request.filters.PageSize;

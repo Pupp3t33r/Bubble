@@ -12,13 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.API", "Bubble.API\Bubble.API.csproj", "{402BCE1C-27C7-4DB0-85B4-ECF5A391C880}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.Service", "Bubble.Service\Bubble.Service.csproj", "{B831191B-DA6E-4115-9E98-16AED98DBE76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.CQRS", "Bubble.Service\Bubble.CQRS.csproj", "{B831191B-DA6E-4115-9E98-16AED98DBE76}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.Shared", "Bubble.Shared\Bubble.Shared.csproj", "{57D886DC-D6A3-458A-B589-A5F93EBC009D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.Blazor", "Bubble.Blazor\Bubble.Blazor.csproj", "{31E9E1C7-27F7-471A-9057-3A711B4E9A5F}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Bubble.DataScraping", "Bubble.DataScraping\Bubble.DataScraping.fsproj", "{B755A151-D4AE-425C-9628-97C0E2F7BD51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bubble.APIServices", "Bubble.APIServices\Bubble.APIServices.csproj", "{8085AB9A-C0EC-4C4F-B30D-85C6005B04AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{B755A151-D4AE-425C-9628-97C0E2F7BD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B755A151-D4AE-425C-9628-97C0E2F7BD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B755A151-D4AE-425C-9628-97C0E2F7BD51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8085AB9A-C0EC-4C4F-B30D-85C6005B04AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8085AB9A-C0EC-4C4F-B30D-85C6005B04AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8085AB9A-C0EC-4C4F-B30D-85C6005B04AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8085AB9A-C0EC-4C4F-B30D-85C6005B04AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
