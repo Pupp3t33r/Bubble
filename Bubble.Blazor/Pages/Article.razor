@@ -17,10 +17,19 @@
         <MudButton OnClick=PostCommentAsync Variant="Variant.Filled"
                    EndIcon="@Icons.Material.Filled.Send"
                    Color="Color.Primary">
-            Оставить комментарий
+            Отправить
         </MudButton>
     </Authorized>
     <NotAuthorized>
         <span>Залогиньтесь чтобы оставить комментарий</span>
     </NotAuthorized>
 </AuthorizeView>
+
+@if (comments is not null)
+{
+    @foreach (var comment in comments)
+    {
+        <h3>@comment.Username</h3>
+        <p>@comment.CommentText</p>
+    }
+}

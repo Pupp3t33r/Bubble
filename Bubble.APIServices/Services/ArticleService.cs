@@ -50,41 +50,12 @@ public class ArticleService : IArticleService
         {
             var preparedText = article.ArticleText.Replace("\n", " ");
 
-            HttpResponseMessage? response;
+            var words = await GetLemmasFromAPI(preparedText);
 
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders
-                    .Accept
-                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            words = PrepareWordsToRate(words);
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://api.ispras.ru/texterra/v1/nlp?targetType=lemma&apikey=3772a07bb9c09957d64b80479c8cb5d56717dd58")
-                {
-                    Content = new StringContent("[ {\"text\":\"" + preparedText + "\"} ]",
-
-                        Encoding.UTF8,
-                        "application/json")
-                };
-                response = await httpClient.SendAsync(request);
-            }
-
-            var responseString = await response.Content.ReadAsStringAsync();
-
-            responseString = responseString.Remove(0, 1);
-            responseString = responseString.Remove(responseString.Length - 1, 1);
-
-            var deserializedResponse = JsonSerializer.Deserialize<Root>(responseString);
-
-            var words = deserializedResponse.Annotations.Lemma.Select(x => x.Value).ToList();
-            words.RemoveAll(x => x == "");
-
-            int overallRating = 0;
-
-            foreach (var word in words)
-            {
-                if (WordRatings.TryGetValue(word, out int? rating))
-                    overallRating += rating.Value;
-            }
+            var overallRating = RateArticle(words, WordRatings);
+            
             _ = await _mediator.Send(new RateArticleGoodnessCommand { Id = article.Id, GoodnessRating = overallRating });
         }
     }
@@ -138,4 +109,63 @@ public class ArticleService : IArticleService
         }
     }
 
+    private async Task<List<string>> GetLemmasFromAPI(string textToLemma)
+    {
+        HttpResponseMessage? response;
+
+        using (var httpClient = new HttpClient())
+        {
+            httpClient.DefaultRequestHeaders
+                .Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://api.ispras.ru/texterra/v1/nlp?targetType=lemma&apikey=3772a07bb9c09957d64b80479c8cb5d56717dd58")
+            {
+                Content = new StringContent("[ {\"text\":\"" + textToLemma + "\"} ]",
+
+                    Encoding.UTF8,
+                    "application/json")
+            };
+            response = await httpClient.SendAsync(request);
+        }
+
+        var responseString = await response.Content.ReadAsStringAsync();
+
+        responseString = responseString.Remove(0, 1);
+        responseString = responseString.Remove(responseString.Length - 1, 1);
+
+        var deserializedResponse = JsonSerializer.Deserialize<Root>(responseString);
+
+        var words = deserializedResponse.Annotations.Lemma.Select(x => x.Value).ToList();
+
+        return words;
+    }
+
+    private List<string> PrepareWordsToRate(List<string> words)
+    {
+        words.RemoveAll(x => x == "");
+
+        Parallel.For(0, words.Count,
+                i =>
+                    {
+                        if (words[i] == "не")
+                        {
+                            words[i + 1] = "не " + words[i + 1];
+                        }
+                    });
+        words.RemoveAll(x => x == "не");
+        return words;
+    }
+
+    private int RateArticle(List<string> words, Dictionary<string, int?> WordRatings)
+    {
+        int overallRating = 0;
+
+        Parallel.ForEach(words, word => {
+            if (WordRatings.TryGetValue(word, out int? rating))
+                Interlocked.Add(ref overallRating, rating.Value);
+        });
+
+        return overallRating;
+    }
 }

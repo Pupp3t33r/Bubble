@@ -18,12 +18,17 @@ let _getOnlinerArticleText (link:string) = async {
                                 && not (x.HasName("script")))
                     |> Seq.map (fun x -> x.InnerText())
                     |> String.concat "\n"
+
     let edit1 = text.Replace("Auto.Onlíner в Telegram: обстановка на дорогах и только самые важные новости
 Есть о чем рассказать? Пишите в наш телеграм-бот. Это анонимно и быстро
 Перепечатка текста и фотографий Onlíner без разрешения редакции запрещена. ng@onliner.by", "")
-    let finalText = edit1.Replace("Наш канал в Telegram. Присоединяйтесь!
+
+    let edit2 = text.Replace("Пишите нам: pv@onliner.by или t.me/vitpetrovich. Auto.Onlíner в Telegram: обстановка на дорогах и только самые важные новости Есть о чем рассказать? Пишите в наш телеграм-бот. Это анонимно и быстро", "")
+
+    let finalText = edit2.Replace("Наш канал в Telegram. Присоединяйтесь!
 Есть о чем рассказать? Пишите в наш телеграм-бот. Это анонимно и быстро
 Перепечатка текста и фотографий Onlíner без разрешения редакции запрещена. ng@onliner.by", "")
+
     return finalText
 }
 

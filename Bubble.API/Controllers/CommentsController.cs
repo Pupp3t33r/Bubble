@@ -1,5 +1,6 @@
 ﻿using Bubble.APIServices.Interfaces;
 using Bubble.Shared.Models.Request;
+using Bubble.Shared.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,19 @@ public class CommentsController: Controller
         try
         {
             return await _commentService.AddCommentAsync(addCommentRequest);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("GetCommentsForArticle/{id}")]
+    public async Task<ActionResult<List<GetCommentsResponse>>> GetComments(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _commentService.GetCommentsForArticleAsync(id, cancellationToken);
         }
         catch (Exception ex)
         {

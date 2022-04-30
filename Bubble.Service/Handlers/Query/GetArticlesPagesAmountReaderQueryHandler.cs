@@ -40,6 +40,7 @@ public class GetArticlesPagesAmountReaderQueryHandler : IRequestHandler<GetArtic
             default:
                 break;
         }
+        query = query.Where(x => x.Approved == true);
         var itemCount = await query.CountAsync(cancellationToken);
         return (itemCount + request.filters.PageSize - 1) / request.filters.PageSize;
     }

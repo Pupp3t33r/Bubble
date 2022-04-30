@@ -14,6 +14,7 @@ public partial class Article
 
     GetArticleResponse article;
     string newCommentText = String.Empty;
+    List<GetCommentsResponse> comments;
 
     private async Task<bool> PostCommentAsync()
     {
@@ -33,11 +34,22 @@ public partial class Article
         return result.IsSuccessStatusCode;
     }
 
+    private async Task GetArticleDetails()
+    {
+        article = await Http.GetFromJsonAsync<GetArticleResponse>($"api/Articles/{ArticleId}");
+    }
+
+    private async Task GetCommentsToArticle()
+    {
+        comments = await Http.GetFromJsonAsync<List<GetCommentsResponse>>($"api/Comments/GetCommentsForArticle/{ArticleId}");
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            article = await Http.GetFromJsonAsync<GetArticleResponse>($"api/Articles/{ArticleId}");
+            await GetArticleDetails();
+            await GetCommentsToArticle();
             StateHasChanged();
         }
     }
