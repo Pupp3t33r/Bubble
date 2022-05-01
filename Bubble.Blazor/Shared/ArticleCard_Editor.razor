@@ -1,0 +1,20 @@
+﻿<MudCard>
+    <MudCardContent>
+        <MudText>@ArticleDetails.Title</MudText>
+        <MudText Typo="Typo.body2">@ArticleDetails.ShortDesc</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <a href="articleEdit/@ArticleDetails.Id">
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Перейти к статье</MudButton>
+        </a>
+        @if (ArticleDetails.Approved)
+        {
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Спрятать</MudButton>
+        } 
+        else
+        {
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Одобрить</MudButton>
+        }
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Удалить</MudButton>
+    </MudCardActions>
+</MudCard>

@@ -93,4 +93,30 @@ public class ArticlesController: Controller
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("ChangeArticleApproval/{id}"), Authorize(Roles = "Editor, Administrator")]
+    public async Task<ActionResult<bool>> ChangeArticleApproval(Guid id)
+    {
+        try
+        {
+            return await _articleService.ChangeArticleApprovalAsync(id);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("DeleteArticle/{id}"), Authorize(Roles = "Editor, Administrator")]
+    public async Task<ActionResult<int>> DeleteArticle(Guid id)
+    {
+        try
+        {
+            return await _articleService.DeleteArticleAsync(id);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

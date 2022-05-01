@@ -20,6 +20,16 @@
             <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
         </MudSelect>
         <MudDatePicker Label="Дата" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
+        @*<MudSelect @bind-Value="Filter.Approved" T="@(bool?)" Label="Одобрена?" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value=null>Все</MudSelectItem>
+            <MudSelectItem Value=true>Да</MudSelectItem>
+            <MudSelectItem Value=false>Нет</MudSelectItem>
+        </MudSelect>*@
+        <MudSelect @bind-Value="Filter.GoodnessRatingComparisonOperator" T="ComparisonOperators" Label="Рейтинг" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value=ComparisonOperators.Less_or_Equal>&le;</MudSelectItem>
+            <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
+        </MudSelect>
+        <MudSlider Value="@Filter.GoodnessRating" Min=-50 Max=500 Step=1 ValueLabel="true" />
         <MudButton OnClick=FilterOut Variant="Variant.Filled" FullWidth="true">Отфильтровать</MudButton>
     </MudNavMenu>
 </MudDrawer>

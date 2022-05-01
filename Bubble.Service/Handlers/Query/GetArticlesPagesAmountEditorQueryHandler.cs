@@ -41,8 +41,26 @@ public class GetArticlesPagesAmountEditorQueryHandler : IRequestHandler<GetArtic
             default:
                 break;
         }
-        query = query.Where(x => x.GoodnessRating >= request.filters.GoodnessRatingMin &&
-                                          x.GoodnessRating <= request.filters.GoodnessRatingMax);
+        switch (request.filters.GoodnessRatingComparisonOperator)
+        {
+            case Shared.Enums.ComparisonOperators.Equal:
+                query = query.Where(x => x.GoodnessRating == request.filters.GoodnessRating);
+                break;
+            case Shared.Enums.ComparisonOperators.More:
+                query = query.Where(x => x.GoodnessRating > request.filters.GoodnessRating);
+                break;
+            case Shared.Enums.ComparisonOperators.More_or_Equal:
+                query = query.Where(x => x.GoodnessRating >= request.filters.GoodnessRating);
+                break;
+            case Shared.Enums.ComparisonOperators.Less:
+                query = query.Where(x => x.GoodnessRating < request.filters.GoodnessRating);
+                break;
+            case Shared.Enums.ComparisonOperators.Less_or_Equal:
+                query = query.Where(x => x.GoodnessRating <= request.filters.GoodnessRating);
+                break;
+            default:
+                break;
+        }
         if (request.filters.Approved is not null)
         {
             query = request.filters.Approved == true ?

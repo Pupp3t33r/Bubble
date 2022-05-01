@@ -55,7 +55,7 @@ public class ArticleService : IArticleService
             words = PrepareWordsToRate(words);
 
             var overallRating = RateArticle(words, WordRatings);
-            
+
             _ = await _mediator.Send(new RateArticleGoodnessCommand { Id = article.Id, GoodnessRating = overallRating });
         }
     }
@@ -90,6 +90,16 @@ public class ArticleService : IArticleService
     public async Task<List<string>> GetArticlesSourcesAsync()
     {
         return await _mediator.Send(new GetArticlesSourcesQuery());
+    }
+
+    public async Task<bool> ChangeArticleApprovalAsync(Guid id)
+    {
+        return await _mediator.Send(new ChangeArticleApprovalCommand() { ArticleId = id });
+    }
+
+    public async Task<int> DeleteArticleAsync(Guid id)
+    {
+        return await _mediator.Send(new DeleteArticleCommand() { ArticleId = id });
     }
 
     private async Task<List<string>> GetAllArticleUrls()
@@ -161,7 +171,8 @@ public class ArticleService : IArticleService
     {
         int overallRating = 0;
 
-        Parallel.ForEach(words, word => {
+        Parallel.ForEach(words, word =>
+        {
             if (WordRatings.TryGetValue(word, out int? rating))
                 Interlocked.Add(ref overallRating, rating.Value);
         });

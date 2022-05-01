@@ -12,4 +12,6 @@ public interface IArticleService
     Task<int> GetArticlesPagesAmountEditorAsync(GetArticlesPageAsEditorRequest request);
     Task RateUnratedArticlesGoodness();
     Task<List<string>> GetArticlesSourcesAsync();
+    Task<bool> ChangeArticleApprovalAsync(Guid id);
+    Task<int> DeleteArticleAsync(Guid id);
 }
