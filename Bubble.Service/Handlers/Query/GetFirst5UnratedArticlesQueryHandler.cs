@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Handlers.Query;
+﻿namespace Bubble.CQS.Handlers.Query;
 public class GetFirst5UnratedArticlesQueryHandler : IRequestHandler<GetFirst5UnratedArticlesQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Bubble.APIServices.Interfaces;
-using Bubble.CQRS.Command;
-using Bubble.CQRS.Query;
+using Bubble.CQS.Command;
+using Bubble.CQS.Query;
 using Bubble.Data.Entities;
 using Bubble.Shared.Models.Request;
 using Bubble.Shared.Models.Response;

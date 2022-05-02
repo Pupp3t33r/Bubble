@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Query;
+﻿namespace Bubble.CQS.Query;
 public class GetAllArticlesUrlQuery: IRequest<List<string>>
 {
 }

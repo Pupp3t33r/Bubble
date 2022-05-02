@@ -1,6 +1,6 @@
 ﻿using Bubble.Shared.Enums;
 
-namespace Bubble.CQRS.Handlers.Query;
+namespace Bubble.CQS.Handlers.Query;
 public class GetArticlesPageAsEditorQueryHandler : IRequestHandler<GetArticlesPageAsEditorQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;

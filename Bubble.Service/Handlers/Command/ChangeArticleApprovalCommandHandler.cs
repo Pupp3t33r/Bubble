@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Handlers.Command;
+﻿namespace Bubble.CQS.Handlers.Command;
 public class ChangeArticleApprovalCommandHandler : IRequestHandler<ChangeArticleApprovalCommand, bool>
 {
     private readonly NewsDbContext _dbContext;

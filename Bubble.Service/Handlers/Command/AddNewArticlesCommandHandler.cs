@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Handlers.Command;
+﻿namespace Bubble.CQS.Handlers.Command;
 public class AddNewArticlesCommandHandler: IRequestHandler<AddNewArticlesCommand, int>
 {
     private readonly NewsDbContext _dbContext;

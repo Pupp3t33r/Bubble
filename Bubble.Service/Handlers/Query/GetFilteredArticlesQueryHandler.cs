@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.CQRS.Handlers.Query;
+namespace Bubble.CQS.Handlers.Query;
 public class GetFilteredArticlesQueryHandler : IRequestHandler<GetFilteredArticlesQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;

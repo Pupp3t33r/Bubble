@@ -2,8 +2,8 @@
 using Bubble.APIServices.Interfaces;
 using Bubble.APIServices.JsonModels;
 using Bubble.Data.Entities;
-using Bubble.CQRS.Command;
-using Bubble.CQRS.Query;
+using Bubble.CQS.Command;
+using Bubble.CQS.Query;
 using Bubble.Shared.Models.Request;
 using Bubble.Shared.Models.Response;
 using MediatR;

@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.CQRS.Handlers.Query;
+namespace Bubble.CQS.Handlers.Query;
 public class GetUserPasswordHashHandler : IRequestHandler<GetUserPasswordHashQuery, string>
 {
     private readonly NewsDbContext _dbContext;

@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Handlers.Query;
+﻿namespace Bubble.CQS.Handlers.Query;
 public class GetRoleByUserIdQueryHandler : IRequestHandler<GetRoleByUserIdQuery, string>
 {
     private readonly NewsDbContext _dbContext;

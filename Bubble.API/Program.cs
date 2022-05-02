@@ -1,6 +1,6 @@
 using Bubble.API.MapperProfiles;
 using Bubble.Data;
-using Bubble.CQRS.Query;
+using Bubble.CQS.Query;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Hangfire;

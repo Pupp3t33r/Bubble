@@ -1,8 +1,8 @@
 ﻿using Bubble.Data;
-using Bubble.CQRS.Query;
+using Bubble.CQS.Query;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bubble.CQRS.Handlers.Query;
+namespace Bubble.CQS.Handlers.Query;
 public class CheckIfUserExistsQueryHandler : IRequestHandler<CheckIfUserExistsQuery, Guid>
 {
     private readonly NewsDbContext _dbContext;

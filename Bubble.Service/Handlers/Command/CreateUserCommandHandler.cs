@@ -1,5 +1,5 @@
 ﻿
-namespace Bubble.CQRS.Handlers.Command;
+namespace Bubble.CQS.Handlers.Command;
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
 {
     private readonly NewsDbContext _dbContext;

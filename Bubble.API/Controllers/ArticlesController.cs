@@ -107,7 +107,7 @@ public class ArticlesController: Controller
         }
     }
 
-    [HttpGet("DeleteArticle/{id}"), Authorize(Roles = "Editor, Administrator")]
+    [HttpDelete("DeleteArticle/{id}"), Authorize(Roles = "Editor, Administrator")]
     public async Task<ActionResult<int>> DeleteArticle(Guid id)
     {
         try

@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Command;
+﻿namespace Bubble.CQS.Command;
 public class RateArticleGoodnessCommand: IRequest<int>
 {
     public Guid Id { get; set; }

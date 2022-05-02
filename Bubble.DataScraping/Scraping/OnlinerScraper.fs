@@ -52,6 +52,10 @@ let _getOnlinerArticles () = async {
     return articles
 }
 
+let GetOnlierArticleText (link:string) = 
+    let mytask = Async.StartAsTask(_getOnlinerArticleText(link))
+    mytask
+
 let GetOnlinerArticlesAsync () = 
     let mytask = Async.StartAsTask(_getOnlinerArticles())
     mytask

@@ -1,6 +1,6 @@
 ﻿using Bubble.Shared.Models.Request;
 
-namespace Bubble.CQRS.Query;
+namespace Bubble.CQS.Query;
 public class GetArticlesPagesAmountEditorQuery : IRequest<int>
 {
     public GetArticlesPageAsEditorRequest filters { get; set; }

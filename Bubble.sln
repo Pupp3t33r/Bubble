@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.API", "Bubble.API\Bubble.API.csproj", "{402BCE1C-27C7-4DB0-85B4-ECF5A391C880}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.CQRS", "Bubble.Service\Bubble.CQRS.csproj", "{B831191B-DA6E-4115-9E98-16AED98DBE76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.CQS", "Bubble.Service\Bubble.CQS.csproj", "{B831191B-DA6E-4115-9E98-16AED98DBE76}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bubble.Shared", "Bubble.Shared\Bubble.Shared.csproj", "{57D886DC-D6A3-458A-B589-A5F93EBC009D}"
 EndProject

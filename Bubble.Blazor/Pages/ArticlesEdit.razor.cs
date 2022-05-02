@@ -47,7 +47,7 @@ public partial class ArticlesEdit
 
     private async Task DeleteArticle (GetArticlesPageAsEditorResponse article)
     {
-        var result = await Http.GetFromJsonAsync<int>($"api/Articles/DeleteArticle/{article.Id}");
+        var result = await Http.DeleteAsync($"api/Articles/DeleteArticle/{article.Id}");
         articles.Remove(article);
     }
 

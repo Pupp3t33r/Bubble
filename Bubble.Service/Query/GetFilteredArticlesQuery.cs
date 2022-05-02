@@ -1,6 +1,6 @@
 ﻿using Bubble.Data.Entities;
 
-namespace Bubble.CQRS.Query;
+namespace Bubble.CQS.Query;
 public class GetFilteredArticlesQuery: IRequest<List<Article>>
 {
     public string ArticleName { get; set; }

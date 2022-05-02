@@ -1,6 +1,6 @@
 ﻿using Bubble.Shared.Models.Request;
 
-namespace Bubble.CQRS.Query;
+namespace Bubble.CQS.Query;
 public class GetArticlesPageAsReaderQuery: IRequest<List<Article>>
 {
     public GetArticlesPageAsReaderRequest ArticlesRequest { get; set; }

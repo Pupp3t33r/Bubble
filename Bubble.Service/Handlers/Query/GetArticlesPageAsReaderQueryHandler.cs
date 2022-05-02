@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Handlers.Query;
+﻿namespace Bubble.CQS.Handlers.Query;
 public class GetArticlesPageAsReaderQueryHandler : IRequestHandler<GetArticlesPageAsReaderQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;

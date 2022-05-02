@@ -1,4 +1,4 @@
-﻿namespace Bubble.CQRS.Handlers.Query;
+﻿namespace Bubble.CQS.Handlers.Query;
 public class GetCommentsForArticleQueryHandler : IRequestHandler<GetCommentsForArticleQuery, List<Comment>>
 {
     private readonly NewsDbContext _dbContext;
