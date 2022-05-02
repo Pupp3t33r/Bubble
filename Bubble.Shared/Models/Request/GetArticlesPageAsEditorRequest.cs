@@ -9,7 +9,8 @@ public class GetArticlesPageAsEditorRequest : ICloneable
     public string ArticleTitleSearch { get; set; } = String.Empty;
     public DateTime PubDate { get; set; } = DateTime.Now;
     public ComparisonOperators PubDateComparisonOperator { get; set; } = ComparisonOperators.Less_or_Equal;
-    public bool? Approved { get; set; } = null;
+    public YesNoAll Approved { get; set; } = YesNoAll.All;
+    public YesNoAll Rated { get; set; } = YesNoAll.All;
     public ComparisonOperators GoodnessRatingComparisonOperator { get; set; } = ComparisonOperators.Less_or_Equal;
     public int GoodnessRating { get; set; }
 

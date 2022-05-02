@@ -1,25 +1,25 @@
 ﻿@using Bubble.Shared.Enums
 
 
-<MudDrawer Open=true Elevation="0" ClipMode=DrawerClipMode.Docked Variant="@DrawerVariant.Persistent" Color="Color.Primary">
+<MudDrawer Style="position:fixed" Width="15%" Open=true Elevation="0" ClipMode=DrawerClipMode.Docked Variant="@DrawerVariant.Persistent" Color="Color.Primary">
     <MudDrawerHeader>
-        <MudText Typo="Typo.h6">Фильтры</MudText>
+        <MudText Style="padding:10px 0px" Typo="Typo.h6">Фильтры</MudText>
     </MudDrawerHeader>
-    <MudNavMenu>
-        <MudSelect @bind-Value="Filter.Source" T="string" Label="Источники" AnchorOrigin="Origin.BottomCenter">
+    <MudNavMenu Style="padding:15px">
+        <MudSelect Style="padding:10px 0px" @bind-Value="Filter.Source" T="string" Label="Источники" AnchorOrigin="Origin.BottomCenter">
             <MudSelectItem Value="String.Empty" />
             @foreach (var source in Sources)
             {
                  <MudSelectItem Value="@source" />
             }
         </MudSelect>
-        <MudTextField @bind-Value="Filter.ArticleTitleSearch" Label="Поиск в названии статьи" Variant="Variant.Text"></MudTextField>
-        <MudSelect @bind-Value="Filter.PubDateComparisonOperator" T="ComparisonOperators" Label="Дата" AnchorOrigin="Origin.BottomCenter">
+        <MudTextField Style="padding:10px 0px" @bind-Value="Filter.ArticleTitleSearch" Label="Поиск в названии статьи" Variant="Variant.Text"></MudTextField>
+        <MudSelect Style="padding:10px 0px" @bind-Value="Filter.PubDateComparisonOperator" T="ComparisonOperators" Label="Дата" AnchorOrigin="Origin.BottomCenter">
             <MudSelectItem Value=ComparisonOperators.Less_or_Equal>&le;</MudSelectItem>
             <MudSelectItem Value=ComparisonOperators.Equal>=</MudSelectItem>
             <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
         </MudSelect>
-        <MudDatePicker Label="Дата" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
-        <MudButton OnClick=FilterOut Variant="Variant.Filled" FullWidth="true">Отфильтровать</MudButton>
+        <MudDatePicker Style="padding:10px 0px" Label="Дата" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
+        <MudButton Style="padding:10px 0px" OnClick=FilterOut Color=Color.Transparent Variant="Variant.Filled" FullWidth="true">Отфильтровать</MudButton>
     </MudNavMenu>
 </MudDrawer>

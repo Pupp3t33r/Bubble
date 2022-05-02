@@ -5,7 +5,7 @@
 <MudDrawerContainer Class="mud-height-full">
     <ArticlesSidebarReader FilterOut=FilterOut_Reader @bind-Filter=filter />
     <div class="px-4 justify-center align-center mud-height-full">
-        <MudPagination SelectedChanged=PageChanged Variant="Variant.Outlined" Count=pagesAmount />
+        <MudPagination Style="padding:10px" SelectedChanged=PageChanged Variant="Variant.Outlined" Count=pagesAmount />
         @foreach (var article in articles)
         {
             <ArticleCard_Reader ArticleDetails=article />

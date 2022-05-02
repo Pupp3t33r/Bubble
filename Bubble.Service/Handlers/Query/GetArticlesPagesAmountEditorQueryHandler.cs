@@ -36,36 +36,51 @@ public class GetArticlesPagesAmountEditorQueryHandler : IRequestHandler<GetArtic
                 query = query.Where(x => x.PublishDate.Date < request.filters.PubDate.Date);
                 break;
             case Shared.Enums.ComparisonOperators.Less_or_Equal:
-                query = query.Where(x => x.PublishDate.Date == request.filters.PubDate.Date);
+                query = query.Where(x => x.PublishDate.Date <= request.filters.PubDate.Date);
                 break;
             default:
                 break;
         }
-        switch (request.filters.GoodnessRatingComparisonOperator)
+        if (request.filters.Rated == Shared.Enums.YesNoAll.Yes)
         {
-            case Shared.Enums.ComparisonOperators.Equal:
-                query = query.Where(x => x.GoodnessRating == request.filters.GoodnessRating);
+            switch (request.filters.GoodnessRatingComparisonOperator)
+            {
+                case Shared.Enums.ComparisonOperators.Equal:
+                    query = query.Where(x => x.GoodnessRating == request.filters.GoodnessRating);
+                    break;
+                case Shared.Enums.ComparisonOperators.More:
+                    query = query.Where(x => x.GoodnessRating > request.filters.GoodnessRating);
+                    break;
+                case Shared.Enums.ComparisonOperators.More_or_Equal:
+                    query = query.Where(x => x.GoodnessRating >= request.filters.GoodnessRating);
+                    break;
+                case Shared.Enums.ComparisonOperators.Less:
+                    query = query.Where(x => x.GoodnessRating < request.filters.GoodnessRating);
+                    break;
+                case Shared.Enums.ComparisonOperators.Less_or_Equal:
+                    query = query.Where(x => x.GoodnessRating <= request.filters.GoodnessRating);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (request.filters.Rated == Shared.Enums.YesNoAll.No)
+        {
+            query = query.Where(x => x.GoodnessRating == null);
+        }
+
+        switch (request.filters.Approved)
+        {
+            case Shared.Enums.YesNoAll.Yes:
+                query = query.Where(x => x.Approved);
                 break;
-            case Shared.Enums.ComparisonOperators.More:
-                query = query.Where(x => x.GoodnessRating > request.filters.GoodnessRating);
+            case Shared.Enums.YesNoAll.No:
+                query = query.Where(x => !x.Approved);
                 break;
-            case Shared.Enums.ComparisonOperators.More_or_Equal:
-                query = query.Where(x => x.GoodnessRating >= request.filters.GoodnessRating);
-                break;
-            case Shared.Enums.ComparisonOperators.Less:
-                query = query.Where(x => x.GoodnessRating < request.filters.GoodnessRating);
-                break;
-            case Shared.Enums.ComparisonOperators.Less_or_Equal:
-                query = query.Where(x => x.GoodnessRating <= request.filters.GoodnessRating);
+            case Shared.Enums.YesNoAll.All:
                 break;
             default:
                 break;
-        }
-        if (request.filters.Approved is not null)
-        {
-            query = request.filters.Approved == true ?
-                    query.Where(x => x.Approved) :
-                    query.Where(x => !x.Approved);
         }
         var itemCount = await query.CountAsync(cancellationToken);
         return (itemCount + request.filters.PageSize - 1) / request.filters.PageSize;

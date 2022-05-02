@@ -1,17 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-@*    <div class="sidebar">
-        <NavMenu />
-    </div>*@
 
     <MudAppBar>
         <MudIcon Icon=@Icons.Filled.BubbleChart Size=Size.Large />
         <a href="">
-            <MudButton Variant=Variant.Text>Home</MudButton>
+            <MudButton Style="margin-left:15px" Variant=Variant.Text>Читать</MudButton>
         </a>
+        <AuthorizeView Roles="Editor, Administrator">
+            <Authorized>
+                <a href="ArticlesEditor">
+                    <MudButton Style="margin-left:15px" Variant=Variant.Text>Редактировать</MudButton>
+                </a>
+            </Authorized>
+        </AuthorizeView>
         <a href="Login">
-            <MudButton Variant=Variant.Text>Login</MudButton>
+            <MudButton Style="margin-left:15px" Variant=Variant.Text>Войти</MudButton>
         </a>
     </MudAppBar>
 
@@ -26,6 +30,6 @@
     </main>
 </div>
 
-<MudThemeProvider IsDarkMode=true/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<MudThemeProvider IsDarkMode=true />
+<MudDialogProvider />
+<MudSnackbarProvider />

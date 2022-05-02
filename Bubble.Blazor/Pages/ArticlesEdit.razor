@@ -1,14 +1,14 @@
 ﻿@page "/ArticlesEditor/"
 
-<PageTitle>Новости</PageTitle>
+<PageTitle>Редактор</PageTitle>
 
 <MudDrawerContainer Class="mud-height-full">
     <ArticlesSidebarEditor FilterOut=FilterOut @bind-Filter=filter />
     <div class="px-4 justify-center align-center mud-height-full">
-        <MudPagination SelectedChanged=PageChanged Variant="Variant.Outlined" Count=pagesAmount />
+        <MudPagination Style="padding:10px" SelectedChanged=PageChanged Variant="Variant.Outlined" Count=pagesAmount />
         @foreach (var article in articles)
         {
-            <ArticleCard_Editor ArticleDetails=article />
+            <ArticleCard_Editor DeleteArticle=@(()=>DeleteArticle(article)) ArticleDetails=article />
         }
     </div>
 </MudDrawerContainer>

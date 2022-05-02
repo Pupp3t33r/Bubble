@@ -1,35 +1,43 @@
 ﻿@using Bubble.Shared.Enums
 
 
-<MudDrawer Open=true Elevation="0" ClipMode=DrawerClipMode.Docked Variant="@DrawerVariant.Persistent" Color="Color.Primary">
+<MudDrawer Style="position:fixed" Width="15%" Open=true Elevation="0" ClipMode=DrawerClipMode.Docked Variant="@DrawerVariant.Persistent" Color="Color.Primary">
     <MudDrawerHeader>
-        <MudText Typo="Typo.h6">Фильтры</MudText>
+        <MudText Style="padding:10px 0px" Typo="Typo.h6">Фильтры</MudText>
     </MudDrawerHeader>
-    <MudNavMenu>
-        <MudSelect @bind-Value="Filter.Source" T="string" Label="Источники" AnchorOrigin="Origin.BottomCenter">
+    <MudNavMenu Style="padding:15px">
+        <MudSelect Style="padding:10px 0px" @bind-Value="Filter.Source" T="string" Label="Источники" AnchorOrigin="Origin.BottomCenter">
             <MudSelectItem Value="String.Empty" />
             @foreach (var source in Sources)
             {
-                 <MudSelectItem Value="@source" />
+                <MudSelectItem Value="@source" />
             }
         </MudSelect>
-        <MudTextField @bind-Value="Filter.ArticleTitleSearch" Label="Поиск в названии статьи" Variant="Variant.Text"></MudTextField>
-        <MudSelect @bind-Value="Filter.PubDateComparisonOperator" T="ComparisonOperators" Label="Дата" AnchorOrigin="Origin.BottomCenter">
+        <MudTextField Style="padding:10px 0px" @bind-Value="Filter.ArticleTitleSearch" Label="Поиск в названии статьи" Variant="Variant.Text"></MudTextField>
+        <MudSelect Style="padding:10px 0px" @bind-Value="Filter.PubDateComparisonOperator" T="ComparisonOperators" Label="Дата" AnchorOrigin="Origin.BottomCenter">
             <MudSelectItem Value=ComparisonOperators.Less_or_Equal>&le;</MudSelectItem>
             <MudSelectItem Value=ComparisonOperators.Equal>=</MudSelectItem>
             <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
         </MudSelect>
-        <MudDatePicker Label="Дата" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
-        @*<MudSelect @bind-Value="Filter.Approved" T="@(bool?)" Label="Одобрена?" AnchorOrigin="Origin.BottomCenter">
-            <MudSelectItem Value=null>Все</MudSelectItem>
-            <MudSelectItem Value=true>Да</MudSelectItem>
-            <MudSelectItem Value=false>Нет</MudSelectItem>
-        </MudSelect>*@
-        <MudSelect @bind-Value="Filter.GoodnessRatingComparisonOperator" T="ComparisonOperators" Label="Рейтинг" AnchorOrigin="Origin.BottomCenter">
-            <MudSelectItem Value=ComparisonOperators.Less_or_Equal>&le;</MudSelectItem>
-            <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
+        <MudDatePicker Style="padding:10px 0px" Label="Дата" Editable="true" @bind-Date="pubDate" Placeholder="Выберите дату" />
+        <MudSelect Style="padding:10px 0px" @bind-Value="Filter.Approved" T="@YesNoAll" Label="Одобрена?" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value=YesNoAll.All>Все</MudSelectItem>
+            <MudSelectItem Value=YesNoAll.Yes>Да</MudSelectItem>
+            <MudSelectItem Value=YesNoAll.No>Нет</MudSelectItem>
         </MudSelect>
-        <MudSlider Value="@Filter.GoodnessRating" Min=-50 Max=500 Step=1 ValueLabel="true" />
-        <MudButton OnClick=FilterOut Variant="Variant.Filled" FullWidth="true">Отфильтровать</MudButton>
+        <MudSelect Style="padding:10px 0px" @bind-Value="Filter.Rated" T="@YesNoAll" Label="Есть рейтинг?" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value=YesNoAll.All>Все</MudSelectItem>
+            <MudSelectItem Value=YesNoAll.Yes>Да</MudSelectItem>
+            <MudSelectItem Value=YesNoAll.No>Нет</MudSelectItem>
+        </MudSelect>
+        @if (Filter.Rated == YesNoAll.Yes)
+        {
+            <MudSelect Style="padding:10px 0px" @bind-Value="Filter.GoodnessRatingComparisonOperator" T="ComparisonOperators" Label="Рейтинг" AnchorOrigin="Origin.BottomCenter">
+                <MudSelectItem Value=ComparisonOperators.Less_or_Equal>&le;</MudSelectItem>
+                <MudSelectItem Value=ComparisonOperators.More_or_Equal>&ge;</MudSelectItem>
+            </MudSelect>
+            <MudSlider Style="padding:10px 0px" Size=Size.Large Color=Color.Info @bind-Value="@Filter.GoodnessRating" Min=-50 Max=500 Step=1 ValueLabel="true" />
+        }
+        <MudButton Style="padding:10px 0px" Color=Color.Transparent OnClick=FilterOut Variant="Variant.Filled" FullWidth="true">Отфильтровать</MudButton>
     </MudNavMenu>
 </MudDrawer>

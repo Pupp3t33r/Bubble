@@ -1,4 +1,6 @@
-﻿namespace Bubble.CQRS.Handlers.Query;
+﻿using Bubble.Shared.Enums;
+
+namespace Bubble.CQRS.Handlers.Query;
 public class GetArticlesPageAsEditorQueryHandler : IRequestHandler<GetArticlesPageAsEditorQuery, List<Article>>
 {
     private readonly NewsDbContext _dbContext;
@@ -23,49 +25,65 @@ public class GetArticlesPageAsEditorQueryHandler : IRequestHandler<GetArticlesPa
         }
         switch (request.filters.PubDateComparisonOperator)
         {
-            case Shared.Enums.ComparisonOperators.Equal:
+            case ComparisonOperators.Equal:
                 query = query.Where(x => x.PublishDate.Date == request.filters.PubDate.Date);
                 break;
-            case Shared.Enums.ComparisonOperators.More:
+            case ComparisonOperators.More:
                 query = query.Where(x => x.PublishDate.Date > request.filters.PubDate.Date);
                 break;
-            case Shared.Enums.ComparisonOperators.More_or_Equal:
+            case ComparisonOperators.More_or_Equal:
                 query = query.Where(x => x.PublishDate.Date >= request.filters.PubDate.Date);
                 break;
-            case Shared.Enums.ComparisonOperators.Less:
+            case ComparisonOperators.Less:
                 query = query.Where(x => x.PublishDate.Date < request.filters.PubDate.Date);
                 break;
-            case Shared.Enums.ComparisonOperators.Less_or_Equal:
+            case ComparisonOperators.Less_or_Equal:
                 query = query.Where(x => x.PublishDate.Date <= request.filters.PubDate.Date);
                 break;
             default:
                 break;
         }
-        switch (request.filters.GoodnessRatingComparisonOperator)
+
+        if (request.filters.Rated==YesNoAll.Yes)
         {
-            case Shared.Enums.ComparisonOperators.Equal:
-                query = query.Where(x => x.GoodnessRating == request.filters.GoodnessRating);
+            switch (request.filters.GoodnessRatingComparisonOperator)
+            {
+                case ComparisonOperators.Equal:
+                    query = query.Where(x => x.GoodnessRating == request.filters.GoodnessRating);
+                    break;
+                case ComparisonOperators.More:
+                    query = query.Where(x => x.GoodnessRating > request.filters.GoodnessRating);
+                    break;
+                case ComparisonOperators.More_or_Equal:
+                    query = query.Where(x => x.GoodnessRating >= request.filters.GoodnessRating);
+                    break;
+                case ComparisonOperators.Less:
+                    query = query.Where(x => x.GoodnessRating < request.filters.GoodnessRating);
+                    break;
+                case ComparisonOperators.Less_or_Equal:
+                    query = query.Where(x => x.GoodnessRating <= request.filters.GoodnessRating);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (request.filters.Rated==YesNoAll.No)
+        {
+            query = query.Where(x => x.GoodnessRating == null);
+        }
+
+        switch (request.filters.Approved)
+        {
+            case YesNoAll.Yes:
+                query = query.Where(x => x.Approved);
                 break;
-            case Shared.Enums.ComparisonOperators.More:
-                query = query.Where(x => x.GoodnessRating > request.filters.GoodnessRating);
+            case YesNoAll.No:
+                query = query.Where(x => !x.Approved);
                 break;
-            case Shared.Enums.ComparisonOperators.More_or_Equal:
-                query = query.Where(x => x.GoodnessRating >= request.filters.GoodnessRating);
-                break;
-            case Shared.Enums.ComparisonOperators.Less:
-                query = query.Where(x => x.GoodnessRating < request.filters.GoodnessRating);
-                break;
-            case Shared.Enums.ComparisonOperators.Less_or_Equal:
-                query = query.Where(x => x.GoodnessRating <= request.filters.GoodnessRating);
+            case YesNoAll.All:
                 break;
             default:
                 break;
-        }
-        if (request.filters.Approved is not null)
-        {
-            query = request.filters.Approved == true ?
-                    query.Where(x => x.Approved) :
-                    query.Where(x => !x.Approved);
         }
         List<Article> resultList = await query.Skip((request.filters.PageNum - 1) * request.filters.PageSize)
                                               .Take(request.filters.PageSize)

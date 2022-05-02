@@ -3,6 +3,7 @@ using Bubble.Shared.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
+using Bubble.Shared.Enums;
 
 namespace Bubble.Blazor.Pages;
 
@@ -20,11 +21,12 @@ public partial class ArticlesEdit
         PageSize = 8,
         PubDate = DateTime.Today,
         ArticleTitleSearch = "",
-        PubDateComparisonOperator = Bubble.Shared.Enums.ComparisonOperators.Less_or_Equal,
+        PubDateComparisonOperator = ComparisonOperators.Less_or_Equal,
         Source = "",
-        Approved = null,
+        Approved = YesNoAll.All,
+        Rated = YesNoAll.All,
         GoodnessRating = 500,
-        GoodnessRatingComparisonOperator = Bubble.Shared.Enums.ComparisonOperators.Less_or_Equal
+        GoodnessRatingComparisonOperator = ComparisonOperators.Less_or_Equal
     };
     GetArticlesPageAsEditorRequest currFilter;
 
@@ -38,9 +40,15 @@ public partial class ArticlesEdit
 
     private async Task PageChanged(int i)
     {
-        filter.PageNum = i;
+        currFilter.PageNum = i;
         await UpdateArticlesList();
         StateHasChanged();
+    }
+
+    private async Task DeleteArticle (GetArticlesPageAsEditorResponse article)
+    {
+        var result = await Http.GetFromJsonAsync<int>($"api/Articles/DeleteArticle/{article.Id}");
+        articles.Remove(article);
     }
 
     private async Task UpdateArticlesList()
