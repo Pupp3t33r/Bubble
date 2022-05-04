@@ -9,17 +9,33 @@ public class ArticlesProfile: Profile
 {
     public ArticlesProfile()
     {
-        CreateMap<ArticleRecord, Article>()
+        CreateMap<OnlinerArticleRecord, Article>()
             .ForMember(art => art.PublishDate,
             opt => opt.MapFrom(artRec => artRec.pubDate.DateTime))
             .ForMember(art=>art.ArticleText, 
             opt=>opt.MapFrom(artRec=>artRec.text))
             .ForMember(art=>art.Title, 
             opt=>opt.MapFrom(artRec=>artRec.title))
+            .ForMember(art=>art.Source,
+            opt=>opt.MapFrom(artRec=>artRec.source))
             .ForMember(art=>art.SourceURL,
             opt=>opt.MapFrom(artRec=>artRec.link))
             .ForMember(art=>art.ShortDesc, 
             opt=> opt.MapFrom(artRec=>artRec.shortText));
+
+        CreateMap<LentaArticleRecord, Article>()
+            .ForMember(art => art.PublishDate,
+            opt => opt.MapFrom(artRec => artRec.pubDate.DateTime))
+            .ForMember(art => art.ArticleText,
+            opt => opt.MapFrom(artRec => artRec.text))
+            .ForMember(art => art.Title,
+            opt => opt.MapFrom(artRec => artRec.title))
+            .ForMember(art => art.Source,
+            opt => opt.MapFrom(artRec => artRec.source))
+            .ForMember(art => art.SourceURL,
+            opt => opt.MapFrom(artRec => artRec.link))
+            .ForMember(art => art.ShortDesc,
+            opt => opt.MapFrom(artRec => artRec.shortText.Value));
 
         CreateMap<Article, GetArticlesPageAsReaderResponse>();
         CreateMap<Article, GetArticlesPageAsEditorResponse>();

@@ -24,20 +24,52 @@ public class ArticleService : IArticleService
 
     public async Task AddNewArticlesToDB()
     {
-        var articleRecords = (await OnlinerScraper.GetOnlinerArticlesAsync()).ToList();
-        var articles = _mapper.Map<List<Article>>(articleRecords);
+        var onlinerArticleRecords = (await OnlinerScraper.GetOnlinerArticlesAsync()).ToList();
+        var lentaArticleRecords = (await LentaScraper.GetLentaArticlesAsync()).ToList();
+        var articles = _mapper.Map<List<Article>>(onlinerArticleRecords);
+        articles.AddRange(_mapper.Map<List<Article>>(lentaArticleRecords));
         var dbUrls = await GetAllArticleUrls();
         List<Article> articlesToWrite = new();
         foreach (var article in articles)
         {
             if (!dbUrls.Any(url => url == article.SourceURL))
             {
-                article.Source = "Onliner";
                 article.Approved = false;
                 articlesToWrite.Add(article);
             }
         }
         await _mediator.Send(new AddNewArticlesCommand { ArticlesToWrite = articlesToWrite });
+    }
+
+    public async Task FetchArticlesTextAsync()
+    {
+        var articles = await _mediator.Send(new GetAllArticlesWithNoBodyQuery());
+
+        await Parallel.ForEachAsync(articles,
+                            new ParallelOptions { MaxDegreeOfParallelism = 5 },
+                            async (article, token) =>
+                                        {
+                                            try
+                                            {
+                                                switch (article.Source)
+                                                {
+                                                    case "Onliner":
+                                                        article.ArticleText = await OnlinerScraper.GetOnlinerArticleText(article.SourceURL);
+                                                        break;
+                                                    case "Lenta":
+                                                        article.ArticleText = await LentaScraper.GetLentaArticleText(article.SourceURL);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                            }
+                                            catch (Exception)
+                                            {
+
+                                                throw;
+                                            }
+                                        });
+        await _mediator.Send(new AddBodyToArticlesCommand { Articles = articles });
     }
 
     public async Task RateUnratedArticlesGoodness()

@@ -110,6 +110,10 @@ using (var scope = app.Services.CreateScope())
                             "Rate some Articles",
                             () => articleService.RateUnratedArticlesGoodness(),
                             "0 */1 * * *"); //"*/5 * * * *"
+    RecurringJob.AddOrUpdate(
+            "Fetch articles text",
+                () => articleService.FetchArticlesTextAsync(),
+               Cron.Hourly);
 }
 
 app.Run();

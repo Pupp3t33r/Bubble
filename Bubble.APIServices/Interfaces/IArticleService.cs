@@ -5,6 +5,7 @@ namespace Bubble.APIServices.Interfaces;
 public interface IArticleService
 {
     Task AddNewArticlesToDB();
+    Task FetchArticlesTextAsync();
     Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReaderAsync(GetArticlesPageAsReaderRequest request);
     Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditorAsync(GetArticlesPageAsEditorRequest request);
     Task<GetArticleResponse> GetArticleAsync(Guid id);

@@ -46,13 +46,14 @@ let _getOnlinerArticles () = async {
                     |> PSeq.map (fun x -> { title = x.Title;
                                             link = x.Link; 
                                             shortText = _getShortText x.Description |> Async.RunSynchronously;
-                                            text = _getOnlinerArticleText x.Link |> Async.RunSynchronously;
-                                            pubDate = x.PubDate })
+                                            source = "Onliner";
+                                            text = null;
+                                            pubDate = x.PubDate; } : OnlinerArticleRecord)
                     |> PSeq.toList
     return articles
 }
 
-let GetOnlierArticleText (link:string) = 
+let GetOnlinerArticleText (link:string) = 
     let mytask = Async.StartAsTask(_getOnlinerArticleText(link))
     mytask
 
