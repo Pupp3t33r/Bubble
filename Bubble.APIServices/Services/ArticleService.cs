@@ -11,12 +11,15 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Bubble.APIServices.Services;
 public class ArticleService : IArticleService
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+
     public ArticleService(IMediator mediator, IMapper mapper)
     {
         (_mediator, _mapper) = (mediator, mapper);
@@ -62,6 +65,7 @@ public class ArticleService : IArticleService
                                                     default:
                                                         break;
                                                 }
+                                                Log.Information($"Got article text for some {article.Source} article");
                                             }
                                             catch (Exception)
                                             {
@@ -95,6 +99,7 @@ public class ArticleService : IArticleService
     public async Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReaderAsync(GetArticlesPageAsReaderRequest request)
     {
         var articles = await _mediator.Send(new GetArticlesPageAsReaderQuery { ArticlesRequest = request });
+        Log.Information("Got some articles for reader");
         return _mapper.Map<List<GetArticlesPageAsReaderResponse>>(articles);
     }
     public async Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditorAsync(GetArticlesPageAsEditorRequest request)

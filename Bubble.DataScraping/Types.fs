@@ -14,7 +14,7 @@ type LentaArticleRecord =
     {
         title : string
         text : string
-        shortText : Option<string>
+        shortText : string
         source : string
         link: string
         pubDate : System.DateTimeOffset

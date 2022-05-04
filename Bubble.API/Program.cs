@@ -5,6 +5,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using Hangfire.SqlServer;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using Bubble.APIServices.Interfaces;
 using Bubble.APIServices.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,6 +42,10 @@ builder.Services.AddHangfire(configuration => configuration
             UseRecommendedIsolationLevel = true,
             DisableGlobalLocks = true
         }));
+
+builder.Host.UseSerilog((ctx, lc) => lc
+            .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("SerilogLogs")
+            , new MSSqlServerSinkOptions { TableName = "Logs" }));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

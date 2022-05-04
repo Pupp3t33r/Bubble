@@ -14,7 +14,7 @@ let _getLentaArticles () = async {
                     |> PSeq.withDegreeOfParallelism 5
                     |> PSeq.map (fun x -> { title = x.Title;
                                             link = x.Link; 
-                                            shortText = x.Description;
+                                            shortText = x.Description.ToString();
                                             source = "Lenta";
                                             text = null;
                                             pubDate = x.PubDate; }:LentaArticleRecord)

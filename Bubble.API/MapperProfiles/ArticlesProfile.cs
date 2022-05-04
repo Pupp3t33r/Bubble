@@ -35,7 +35,7 @@ public class ArticlesProfile: Profile
             .ForMember(art => art.SourceURL,
             opt => opt.MapFrom(artRec => artRec.link))
             .ForMember(art => art.ShortDesc,
-            opt => opt.MapFrom(artRec => artRec.shortText.Value));
+            opt => opt.MapFrom(artRec => artRec.shortText));
 
         CreateMap<Article, GetArticlesPageAsReaderResponse>();
         CreateMap<Article, GetArticlesPageAsEditorResponse>();
