@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bubble.Data.Migrations
 {
     [DbContext(typeof(NewsDbContext))]
-    [Migration("20220504074846_MakeTextNullable")]
+    [Migration("20220502181325_MakeTextNullable")]
     partial class MakeTextNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

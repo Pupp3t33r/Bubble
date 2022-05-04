@@ -11,7 +11,6 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace Bubble.APIServices.Services;
@@ -19,10 +18,11 @@ public class ArticleService : IArticleService
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
-    public ArticleService(IMediator mediator, IMapper mapper)
+    public ArticleService(IMediator mediator, IMapper mapper, ILogger logger)
     {
-        (_mediator, _mapper) = (mediator, mapper);
+        (_mediator, _mapper, _logger) = (mediator, mapper, logger);
     }
 
     public async Task AddNewArticlesToDB()
@@ -65,11 +65,11 @@ public class ArticleService : IArticleService
                                                     default:
                                                         break;
                                                 }
-                                                Log.Information($"Got article text for some {article.Source} article");
+                                                _logger.Information($"Got article text for some {article.Source} article");
                                             }
-                                            catch (Exception)
+                                            catch (Exception ex)
                                             {
-
+                                                _logger.Error("Error while fetching article text: " + ex.Message);
                                                 throw;
                                             }
                                         });
@@ -99,7 +99,7 @@ public class ArticleService : IArticleService
     public async Task<List<GetArticlesPageAsReaderResponse>> GetArticlesPageAsReaderAsync(GetArticlesPageAsReaderRequest request)
     {
         var articles = await _mediator.Send(new GetArticlesPageAsReaderQuery { ArticlesRequest = request });
-        Log.Information("Got some articles for reader");
+        _logger.Information("Got some articles for reader");
         return _mapper.Map<List<GetArticlesPageAsReaderResponse>>(articles);
     }
     public async Task<List<GetArticlesPageAsEditorResponse>> GetArticlesPageAsEditorAsync(GetArticlesPageAsEditorRequest request)

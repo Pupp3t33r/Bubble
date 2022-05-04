@@ -30,6 +30,13 @@ builder.Services.AddCors(options =>
                       });
 });
 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+
+builder.Host.UseSerilog(logger);
+
 builder.Services.AddHangfire(configuration => configuration
         .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
         .UseSimpleAssemblyNameTypeSerializer()
@@ -43,9 +50,7 @@ builder.Services.AddHangfire(configuration => configuration
             DisableGlobalLocks = true
         }));
 
-builder.Host.UseSerilog((ctx, lc) => lc
-            .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("SerilogLogs")
-            , new MSSqlServerSinkOptions { TableName = "Logs" }));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
